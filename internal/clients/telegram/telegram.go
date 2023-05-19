@@ -27,7 +27,8 @@ func New(host, token string) Client {
 }
 
 // Fetches updates from the telegram server
-func (c *Client) Updates(offset, limit int) ([]Update, error) {
+func (c *Client) Updates(offset, limit int) (_ []Update, err error) {
+	defer func() { err = e.Wrap("Error while fetching updates: %w", err) }()
 	// Prepare request parameters from func args
 	q := url.Values{}
 	q.Add("offset", strconv.Itoa(offset))
