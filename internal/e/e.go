@@ -1,13 +1,14 @@
+// Package e provides error handling utilities
 package e
 
 import "fmt"
 
-// Wraps an error into a context message
+// Wrap adds a context message to an error
 // If the error is nil then returns nil
-func Wrap(ctx_msg string, err error) error {
+func Wrap(ctxMsg string, err error) error {
 	if err == nil {
 		return nil
 	}
 
-	return fmt.Errorf(ctx_msg, err)
+	return fmt.Errorf(ctxMsg, err)
 }

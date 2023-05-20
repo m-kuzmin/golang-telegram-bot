@@ -1,3 +1,4 @@
+// Package main contains the telegram bot executable
 package main
 
 import (
@@ -17,12 +18,12 @@ func main() {
 		} else {
 			for _, u := range updates {
 				log.Println(u.Message.Text)
-				client.SendMessage(u.Message.Chat.Id, u.Message.Text)
+				client.SendMessage(u.Message.Chat.ID, u.Message.Text)
 			}
 			if len(updates) != 0 {
 				// All updates have an ordered id.
 				// The API requires the offset to be id+1
-				offset = updates[len(updates)-1].Id + 1
+				offset = updates[len(updates)-1].ID + 1
 			}
 		}
 
@@ -33,12 +34,12 @@ func main() {
 // to the bot exe and if it hasn't been found this funciton will panic
 func mustToken() string {
 	const tokenFlag = "tg-token"
-	tg_token := flag.String(tokenFlag, "", "A telegram token from BotFather")
+	tgToken := flag.String(tokenFlag, "", "A telegram token from BotFather")
 	flag.Parse()
 
 	// token ptr could be nil (*nil == panic), but no token is fatal anyway
-	if *tg_token == "" {
+	if *tgToken == "" {
 		log.Fatal("No telegram token specified, use ", "-"+tokenFlag, " TOKEN")
 	}
-	return *tg_token
+	return *tgToken
 }
