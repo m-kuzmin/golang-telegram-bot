@@ -1,5 +1,4 @@
-// Package e provides error handling utilities
-package e
+package util
 
 import "fmt"
 

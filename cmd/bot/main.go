@@ -1,4 +1,3 @@
-// Package main contains the telegram bot executable
 package main
 
 import (
@@ -18,7 +17,9 @@ func main() {
 		} else {
 			for _, u := range updates {
 				log.Println(u.Message.Text)
-				client.SendMessage(u.Message.Chat.ID, u.Message.Text)
+				if err := client.SendMessage(u.Message.Chat.ID, u.Message.Text); err != nil {
+					log.Println("While sending respoce:", err)
+				}
 			}
 			if len(updates) != 0 {
 				// All updates have an ordered id.
@@ -26,7 +27,6 @@ func main() {
 				offset = updates[len(updates)-1].ID + 1
 			}
 		}
-
 	}
 }
 

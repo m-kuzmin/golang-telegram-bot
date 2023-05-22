@@ -1,4 +1,3 @@
-// Package telegram contains logic for interacting with a telegram server
 package telegram
 
 import (
@@ -10,7 +9,7 @@ import (
 	"path"
 	"strconv"
 
-	"github.com/m-kuzmin/golang-telegram-bot/internal/e"
+	"github.com/m-kuzmin/golang-telegram-bot/internal/util"
 )
 
 // Client struct can be used to interact with a telegram server
@@ -31,7 +30,7 @@ func New(host, token string) Client {
 
 // Updates fetches updates from the telegram server
 func (c *Client) Updates(offset, limit int) (_ []Update, err error) {
-	defer func() { err = e.Wrap("Error while fetching updates: %w", err) }()
+	defer func() { err = util.Wrap("Error while fetching updates: %w", err) }()
 
 	// Prepare request parameters from func args
 	q := url.Values{}
@@ -66,7 +65,7 @@ func (c *Client) SendMessage(chatID int, text string) error {
 	// Try to send the messages to chat
 	_, err := c.doRequest("sendMessage", q)
 	if err != nil {
-		return e.Wrap("Error while sending message", err)
+		return util.Wrap("Error while sending message", err)
 	}
 	return nil
 }
@@ -74,7 +73,7 @@ func (c *Client) SendMessage(chatID int, text string) error {
 // Abstracts an API call to a telegram server
 func (c *Client) doRequest(endpoint string, query url.Values) (data []byte, err error) {
 	// automatically wraps an error into a context message
-	defer func() { err = e.Wrap("Error while doing request. Endpoint:", err) }()
+	defer func() { err = util.Wrap("Error while doing request. Endpoint:", err) }()
 
 	// Set up the request
 	u := url.URL{
